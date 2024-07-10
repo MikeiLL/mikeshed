@@ -2,17 +2,10 @@ import math
 from datetime import datetime
 from pathlib import Path
 import pprint
+import random
 
-# Create a new file for today's work
-# If the file already exists, append to it
-# Write the date at the top of the file
-# For each workbook, write the title, work pages, completed, remaining, and completion percentage
-# Ask the user if they worked on each workbook today
-# If they did, increment the completed count and decrement the remaining count
-# Calculate the new completion percentage and print it to the console
-# Print a message of encouragement
-# Save the updated workbook data to the file
-# Close the file
+
+# Good source for emojis: https://emojicombos.com/ https://emojipedia.org/man-fairy-medium-skin-tone
 
 # Seed the first file with the workbook data
 workbooks = [
@@ -102,6 +95,8 @@ today = datetime.today().date()
 
 todays_work = []
 
+fun_unicode_characters = ["🐱", "😻", "😸", "🐲", "🐦‍🔥", "👶", "🙀", "👶🏽", "🎷", "🏳️‍⚧️", "⚧️", "⚨", "🏳️‍🌈", "🍭", "🧙", "🧚🏽‍♂️", "👩‍❤️‍👩"]
+
 print("\nHi, Ashirah! Let's get started on tracking today's work.\n\nEnter number of pages for each book you worked on today.\n\n")
 
 files = Path("ashirah").glob("*.csv")
@@ -122,6 +117,8 @@ else:
           file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
           for i in range(1, len(workbooks)):
               workbook = workbooks[i].split("\t")
+              if len(workbook) < 5:
+                  continue
               workbooks[i] = {
                   "title": workbook[0],
                   "workpages": int(workbook[1]),
@@ -129,33 +126,30 @@ else:
                   "remaining": int(workbook[3]),
                   "completion": workbook[4]
               }
-              print(f"Pages in {workbooks[i]['title']} today?")
-              completed = int(input())
+              completed = int(input(f"Pages in {workbooks[i]['title']} today? "))
               if completed > 0:
                   todays_work.append({
                       "title": workbooks[i]["title"],
-                      "completed": f"{completed} pages",
+                      "completed": f"{completed} page" + ("s" if completed > 1 else ""),
                   })
 
                   workbooks[i]["completed"] += completed
                   workbooks[i]["remaining"] -= completed
                   workbooks[i]["completion"] = str(math.floor(workbooks[i]["completed"] / workbooks[i]["workpages"] * 100)) + "%"
-                  print(f"Great job! Keep up the good work!\n")
+                  print(f"\n{random.choice(fun_unicode_characters)} Great job! Keep up the good work!\n")
                   file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['workpages'] - workbooks[i]['completed']}\t{workbooks[i]['completion']}\n")
               else:
-                  file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['remaining']}\t{workbooks[i]['completion']}\n")
+                  print(f"\n{random.choice(fun_unicode_characters)} No worries! Keep up the good work!\n")
+                  file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['remaining']}\t{workbooks[i]['completion']}")
         file.close()
-        print("Your work has been saved!")
-        print("Summary of today's work:")
+        print("\nYour work has been saved!\n\n")
+        print("\033[1mSummary of today's work:\033[0m\n")
         for work in todays_work:
             print(f"{work['title']}: {work['completed']}")
-
-
-
-    """ print(f"Did you work on {workbook['title']} today? (y/n)")
-    response = input()
-    if response == "y":
-        workbook["completed"] += 1
-        workbook["remaining"] -= 1
-        workbook["completion"] = str(math.floor(workbook["completed"] / workbook["workpages"] * 100)) + "%"
-        print(f"Great job! Keep up the good work!\n") """
+        print("\n----------------\n\033[105mOverall progress:\033[0m\n")
+        for workbook in workbooks[1:]:
+            print(f"{random.choice(fun_unicode_characters)} {workbook['title']}: {workbook['completion']} complete\n----------------\n")
+        print(f"\n\n{random.choice(fun_unicode_characters)} Getting there, homie!!! \n\n")
+        meal = input(f"{random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} What are you thinking about meal on Friday? ")
+        if (meal != ""):
+            print(f"\nSounds good! Moving toward {meal} on Friday! {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)}\n Bye for now. {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)}\n")
