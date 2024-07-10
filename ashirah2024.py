@@ -117,7 +117,7 @@ else:
         with open(f"ashirah/{today}.csv", "w") as file:
           file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
           for i in range(1, len(workbooks)):
-              workbook = workbooks[i].split("\t")
+              workbook = workbooks[i].strip().split("\t")
               if len(workbook) < 5:
                   continue
               workbooks[i] = {
