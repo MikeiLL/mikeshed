@@ -6,6 +6,7 @@ import random
 
 
 # Good source for emojis: https://emojicombos.com/ https://emojipedia.org/man-fairy-medium-skin-tone
+# A source with some color codes https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944
 
 # Seed the first file with the workbook data
 workbooks = [
