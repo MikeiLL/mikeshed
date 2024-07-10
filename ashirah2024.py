@@ -96,7 +96,7 @@ today = datetime.today().date()
 
 todays_work = []
 
-fun_unicode_characters = ["🐱", "😻", "😸", "🐲", "🐦‍🔥", "👶", "🙀", "👶🏽", "🎷", "🏳️‍⚧️", "⚧️", "⚨", "🏳️‍🌈", "🍭", "🧙", "🧚🏽‍♂️", "👩‍❤️‍👩"]
+fun_unicode_characters = [ "🩷", "🧚🏻‍♀️", "✨",  "🏳️‍🌈", "🍭", "🌈", "⭐" ]
 
 print("\nHi, Ashirah! Let's get started on tracking today's work.\n\nEnter number of pages for each book you worked on today.\n\n")
 
@@ -141,7 +141,7 @@ else:
                   file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['workpages'] - workbooks[i]['completed']}\t{workbooks[i]['completion']}\n")
               else:
                   print(f"\n{random.choice(fun_unicode_characters)} No worries! Keep up the good work!\n")
-                  file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['remaining']}\t{workbooks[i]['completion']}")
+                  file.write(f"{workbooks[i]['title']}\t{workbooks[i]['workpages']}\t{workbooks[i]['completed']}\t{workbooks[i]['remaining']}\t{workbooks[i]['completion']}\n")
         file.close()
         print("\nYour work has been saved!\n\n")
         print("\033[1mSummary of today's work:\033[0m\n")
