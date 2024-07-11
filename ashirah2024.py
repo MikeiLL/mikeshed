@@ -13,7 +13,7 @@ no_problem_phrases = [ "No worries!", "No problem!", "No sweat!", "No biggie", "
 congratulatory_phrases = [ "Great job!", "Keep up the good work!", "You're doing great!", "You're it!", "You're doing fantastic!", "You're doing amazing!", "You're doing wonderful!", "You're doing superb!", "Excellent!", "You're doing outstanding!", "You're doing incredible!", "You're doing phenomenal!", "Marvelous!", "You're doing splendid!", "You're doing terrific!", "You're doing fabulous!", "You're doing grand!", "You're doing brilliant!", "You're doing exceptional!", "You're doing magnificent!", "You're doing glorious!", "You're doing sublime!", "You're doing majestic!", "The dutchess!"]
 
 if len(sys.argv) > 1:
-    print("Looks like you want to %s" % sys.argv[1])
+    print("\n\033[0;35mLooks like just want a review.\033[0;0m\n")
     overview = True
 else:
     overview = False
