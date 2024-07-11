@@ -9,6 +9,8 @@ import random
 # A source with some color codes https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944
 
 fun_unicode_characters = [ "🩷", "🧚🏻‍♀️", "✨",  "🏳️‍🌈", "🍭", "🌈", "⭐" ]
+no_problem_phrases = [ "No worries!", "No problem!", "No sweat!", "No biggie", "No problemo!", "No problem at all", "Coolio"]
+congratulatory_phrases = [ "Great job!", "Keep up the good work!", "You're doing great!", "You're it!", "You're doing fantastic!", "You're doing amazing!", "You're doing wonderful!", "You're doing superb!", "Excellent!", "You're doing outstanding!", "You're doing incredible!", "You're doing phenomenal!", "Marvelous!", "You're doing splendid!", "You're doing terrific!", "You're doing fabulous!", "You're doing grand!", "You're doing brilliant!", "You're doing exceptional!", "You're doing magnificent!", "You're doing glorious!", "You're doing sublime!", "You're doing majestic!", "The dutchess!"]
 
 if len(sys.argv) > 1:
     print("Looks like you want to %s" % sys.argv[1])
@@ -20,7 +22,7 @@ else:
         print("\n\n\033[1;32mOkay, maybe next time. \n\n\033[1mHere's a summary of your work so far\033[0m:\n\n")
         overview = True
     else:
-      print("\nOkay!. Let's get started on tracking today's work.\n\nEnter number of pages for each book you worked on today.\n\n")
+      print("\n\033[1;31mOkay!\033[0m \033[1;33mLet's get started on tracking today's work.\033[0m\n\n\033[1;36mEnter number of pages for each book you worked on today.\033[0m\n\n")
 
 
 # Seed the first file with the workbook data
@@ -124,10 +126,8 @@ if len(filelist) == 0:
 else:
     latest_file = sorted(filelist)[-1]
     with open(latest_file, "r") as file:
-      print("\From the latest file ", latest_file)
       workbooks = file.readlines()
       if not overview:
-          print(len(workbooks))
           with open(f"ashirah/{today}.csv", "w") as file:
             file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
             for i in range(1, len(workbooks)):
@@ -135,7 +135,6 @@ else:
               if len(workbook) < 5:
                   continue
               completed = int(input(f"Pages in {workbook[0]} today? "))
-              print(workbook)
               workbook = {
                   "title": workbook[0],
                   "workpages": int(workbook[1]),
@@ -143,24 +142,30 @@ else:
                   "remaining": int(workbook[3]),
                   "completion": workbook[4]
               }
-              print(workbook)
-              todays_work.append({
-                    "title": workbook["title"],
-                    "completed": f"{completed} page" + ("s" if completed > 1 else ""),
-                })
               workbook["completed"] += completed
               workbook["remaining"] -= completed
               workbook["completion"] = str(math.floor(workbook["completed"] / workbook["workpages"] * 100)) + "%"
+              print("Value of completed: ", completed)
               if completed > 0:
-                  print(f"\n{random.choice(fun_unicode_characters)} Great job! Keep up the good work!\n")
+                  todays_work.append({
+                      "title": workbook["title"],
+                      "completed": f"{completed} page" + ("s" if completed > 1 else ""),
+                      "active": True,
+                  })
+                  print(f"\n{random.choice(fun_unicode_characters)} {random.choice(congratulatory_phrases)}\n")
               else:
-                  print(f"\n{random.choice(fun_unicode_characters)} No worries! Keep up the good work!\n")
+                  todays_work.append({
+                      "title": workbook["title"],
+                      "completed": f"{completed} page" + ("s" if completed > 1 else ""),
+                  })
+                  print(f"\n{random.choice(fun_unicode_characters)} {random.choice(no_problem_phrases)}\n")
               file.write(f"{workbook['title']}\t{workbook['workpages']}\t{workbook['completed']}\t{workbook['remaining']}\t{workbook['completion']}\n")
           file.close()
           print("\nYour work has been saved!\n\n")
           print("\033[1mSummary of today's work:\033[0m\n")
           for work in todays_work:
-              print(f"\t{work['title']}: {work['completed']}")
+              if "active" in work: print(f"\t{random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} {work['title']}: {work['completed']}")
+              else: print(f"\t{work['title']}: {work['completed']}")
           print("\n----------------\n\033[105mOverall progress:\033[0m\n")
           meal = input(f"{random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} What are you thinking about meal on Friday? ")
           if (meal != ""):
