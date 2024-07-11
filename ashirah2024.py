@@ -15,12 +15,12 @@ if len(sys.argv) > 1:
     overview = True
 else:
     overview = False
-    enterpages = input("Would you like to enter some workbook pages? (y/n) ")
+    enterpages = input("\n\n\033[1;35mHi, Ashirah. Would you like to enter some workbook pages? (y/n) \033[0;0m")
     if not enterpages.lower().startswith("y"):
-        print("\n\nOkay, maybe next time. \n\n\033[1mHere's a summary of your work so far\033[0m:\n\n")
+        print("\n\n\033[1;32mOkay, maybe next time. \n\n\033[1mHere's a summary of your work so far\033[0m:\n\n")
         overview = True
     else:
-      print("\nHi, Ashirah! Let's get started on tracking today's work.\n\nEnter number of pages for each book you worked on today.\n\n")
+      print("\nOkay!. Let's get started on tracking today's work.\n\nEnter number of pages for each book you worked on today.\n\n")
 
 
 # Seed the first file with the workbook data
@@ -124,7 +124,7 @@ if len(filelist) == 0:
 else:
     latest_file = sorted(filelist)[-1]
     with open(latest_file, "r") as file:
-      print("Opening latest file ", latest_file)
+      print("\From the latest file ", latest_file)
       workbooks = file.readlines()
       if not overview:
           print(len(workbooks))
