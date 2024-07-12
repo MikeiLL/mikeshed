@@ -134,7 +134,7 @@ else:
               workbook = workbooks[i].strip().split("\t")
               if len(workbook) < 5:
                   continue
-              completed = int(input(f"Pages in {workbook[0]} today? "))
+              completed = float(input(f"Pages in {workbook[0]} today? "))
               workbook = {
                   "title": workbook[0],
                   "workpages": int(workbook[1]),
