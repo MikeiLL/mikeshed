@@ -7,6 +7,7 @@ import random
 
 # Good source for emojis: https://emojicombos.com/ https://emojipedia.org/man-fairy-medium-skin-tone
 # A source with some color codes https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944
+# TODO consider using https://docs.python.org/3/howto/curses.html for more advanced terminal UI
 
 fun_unicode_characters = [ "🩷", "🧚🏻‍♀️", "✨",  "🏳️‍🌈", "🍭", "🌈", "⭐" ]
 no_problem_phrases = [ "No worries!", "No problem!", "No sweat!", "No biggie", "No problemo!", "No problem at all", "Coolio"]
@@ -24,6 +25,12 @@ else:
     else:
       print("\n\033[1;31mOkay!\033[0m \033[1;33mLet's get started on tracking today's work.\033[0m\n\n\033[1;36mEnter number of pages for each book you worked on today.\033[0m\n\n")
 
+def is_float(a_string):
+    try:
+        float(a_string)
+        return True
+    except ValueError:
+        return False
 
 # Seed the first file with the workbook data
 workbooks = [
@@ -113,6 +120,8 @@ today = datetime.today().date()
 
 todays_work = []
 
+skipTheRest = False
+
 files = Path("booktracking").glob("*.csv")
 filelist = list(files)
 if len(filelist) == 0:
@@ -134,7 +143,12 @@ else:
               workbook = workbooks[i].strip().split("\t")
               if len(workbook) < 5:
                   continue
-              completed = float(input(f"Pages/Chapters in {workbook[0]} today? "))
+              if not skipTheRest:
+                try:
+                    completed = float(input(f"Pages/Chapters in {workbook[0]} today? "))
+                except ValueError:
+                    completed = 0
+                    skipTheRest = True
               workbook = {
                   "title": workbook[0],
                   "workpages": int(workbook[1]),
@@ -145,8 +159,8 @@ else:
               workbook["completed"] += completed
               workbook["remaining"] -= completed
               workbook["completion"] = str(math.floor(workbook["completed"] / workbook["workpages"] * 100)) + "%"
-              print("Value of completed: ", completed)
-              if completed > 0:
+
+              if (is_float(completed) or completed.isnumeric()) and completed > 0:
                   todays_work.append({
                       "title": workbook["title"],
                       "completed": f"{completed} page" + ("s" if completed > 1 else ""),
@@ -154,6 +168,9 @@ else:
                   })
                   print(f"\n{random.choice(fun_unicode_characters)} {random.choice(congratulatory_phrases)}\n")
               else:
+                  if (completed == "end"):
+                      print(f"\n{random.choice(fun_unicode_characters)} {random.choice(no_problem_phrases)} Cool no additional work to record.\n")
+                      skipTheRest = True
                   todays_work.append({
                       "title": workbook["title"],
                       "completed": f"{completed} page" + ("s" if completed > 1 else ""),
