@@ -113,11 +113,11 @@ today = datetime.today().date()
 
 todays_work = []
 
-files = Path("ashirah").glob("*.csv")
+files = Path("booktracking").glob("*.csv")
 filelist = list(files)
 if len(filelist) == 0:
     print("No files found")
-    with open(f"ashirah/{today}.csv", "w") as file:
+    with open(f"booktracking/{today}.csv", "w") as file:
         file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
         for workbook in workbooks:
             workbook["remaining"] = workbook["workpages"] - workbook["completed"]
@@ -128,7 +128,7 @@ else:
     with open(latest_file, "r") as file:
       workbooks = file.readlines()
       if not overview:
-          with open(f"ashirah/{today}.csv", "w") as file:
+          with open(f"booktracking/{today}.csv", "w") as file:
             file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
             for i in range(1, len(workbooks)):
               workbook = workbooks[i].strip().split("\t")
