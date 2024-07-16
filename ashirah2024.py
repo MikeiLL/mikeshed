@@ -141,7 +141,6 @@ else:
             file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
             for i in range(1, len(workbooks)):
               workbook = workbooks[i].strip().split("\t")
-              print(f"\n\033[1m{workbook}\033[0m\n")
               if len(workbook) < 5:
                   continue
               if not skipTheRest:
