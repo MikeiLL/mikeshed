@@ -141,6 +141,7 @@ else:
             file.write("Title\tWork Pages\tCompleted\tRemaining\tCompletion\n")
             for i in range(1, len(workbooks)):
               workbook = workbooks[i].strip().split("\t")
+              print(f"\n\033[1m{workbook}\033[0m\n")
               if len(workbook) < 5:
                   continue
               if not skipTheRest:
@@ -151,9 +152,9 @@ else:
                     skipTheRest = True
               workbook = {
                   "title": workbook[0],
-                  "workpages": int(workbook[1]),
-                  "completed": int(workbook[2]),
-                  "remaining": int(workbook[3]),
+                  "workpages": float(workbook[1]),
+                  "completed": float(workbook[2]),
+                  "remaining": float(workbook[3]),
                   "completion": workbook[4]
               }
               workbook["completed"] += completed
