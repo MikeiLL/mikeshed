@@ -121,7 +121,8 @@ today = datetime.today().date()
 todays_work = []
 
 skipTheRest = False
-
+total_completed = 0
+total_pages = 0
 files = Path("booktracking").glob("*.csv")
 filelist = list(files)
 if len(filelist) == 0:
@@ -189,5 +190,8 @@ else:
               print(f"\nSounds good! Moving toward {meal} on Friday! {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)}\n\n")
       for book in workbooks[1:]:
           workbook = book.strip().split("\t")
+          total_pages += float(workbook[1])
+          total_completed += float(workbook[2])
           print(f"\t{random.choice(fun_unicode_characters)} {workbook[0]}: {workbook[4]} complete\n\t-----------------------------\n")
-      print(f"\n\n{random.choice(fun_unicode_characters)} Getting there, homie!!! {random.choice(fun_unicode_characters)} Bye for now.  {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)}\n\n")
+      print(f"\n\n{random.choice(fun_unicode_characters)} You've completed {total_completed} pages out of {total_pages} total pages. You are {math.floor(total_completed / total_pages * 100)}% complete. {random.choice(fun_unicode_characters)}\n")
+      print(f"\n{random.choice(fun_unicode_characters)} Getting there, homie!!! {random.choice(fun_unicode_characters)} Bye for now.  {random.choice(fun_unicode_characters)} {random.choice(fun_unicode_characters)}\n\n")
